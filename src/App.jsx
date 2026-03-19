@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
+import { Analytics } from "@vercel/analytics/next";
 
 function App() {
   const [session, setSession] = useState(null);
