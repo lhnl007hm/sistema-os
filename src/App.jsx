@@ -256,6 +256,28 @@ function App() {
       </div>
     );
   }
+  async function handleLogout() {
+    try {
+      // 1. Avisa o Supabase para encerrar a sessão
+      await supabase.auth.signOut();
+
+      // 2. Limpa todos os vestígios locais
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // 3. Reseta os estados do React
+      setSession(null);
+      setEmail("");
+      setPassword("");
+
+      // 4. Força o recarregamento para limpar a memória do navegador
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Erro ao deslogar:", error);
+      // Se falhar, pelo menos forçamos o reload
+      window.location.reload();
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#040404] pb-20 text-[#848484]">
@@ -276,11 +298,8 @@ function App() {
           </div>
         </div>
         <button
-          onClick={() => {
-            supabase.auth.signOut();
-            window.location.reload();
-          }}
-          className="text-[9px] font-black text-[#84c464] border border-[#84c464]/30 px-4 py-2 rounded-full uppercase"
+          onClick={handleLogout}
+          className="text-[9px] font-black text-[#84c464] border border-[#84c464]/30 px-4 py-2 rounded-full uppercase hover:bg-[#84c464] hover:text-[#040404] transition-all"
         >
           Sair
         </button>
