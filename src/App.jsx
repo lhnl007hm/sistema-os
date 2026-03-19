@@ -89,7 +89,6 @@ function App() {
     return matchesBusca && noMes;
   });
 
-  // RESTAURADO: Exportação para BI
   const exportarCSV = () => {
     if (osFiltradas.length === 0)
       return alert("Nenhum registro para exportar.");
@@ -126,7 +125,6 @@ function App() {
     link.click();
   };
 
-  // RESTAURADO: Função de Exclusão
   async function excluirOS(id) {
     if (confirm("Deseja realmente apagar este registro permanentemente?")) {
       const { error } = await supabase
@@ -258,23 +256,19 @@ function App() {
   }
   async function handleLogout() {
     try {
-      // 1. Avisa o Supabase para encerrar a sessão
       await supabase.auth.signOut();
 
-      // 2. Limpa todos os vestígios locais
       localStorage.clear();
       sessionStorage.clear();
 
-      // 3. Reseta os estados do React
       setSession(null);
       setEmail("");
       setPassword("");
 
-      // 4. Força o recarregamento para limpar a memória do navegador
       window.location.href = "/";
     } catch (error) {
       console.error("Erro ao deslogar:", error);
-      // Se falhar, pelo menos forçamos o reload
+
       window.location.reload();
     }
   }
